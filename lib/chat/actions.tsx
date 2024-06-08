@@ -129,8 +129,24 @@ async function describeImage(imageBase64: string) {
   }
 }
 
+const handleCommand = async (command: string) => {
+  if (command === '/help') {
+    //todo
+    console.log('help command');
+  }
+  
+  if (command === '/generate'){
+    //TODO take the story board and generate a comic book
+    //call out
+    console.log('generate command');
+  }
+}
+
 async function submitUserMessage(content: string) {
   'use server'
+
+  if (content.startsWith('/')) {
+
 
   await rateLimit()
 
@@ -158,6 +174,10 @@ async function submitUserMessage(content: string) {
   const spinnerStream = createStreamableUI(<SpinnerMessage />)
   const messageStream = createStreamableUI(null)
   const uiStream = createStreamableUI()
+
+  await handleCommand(content); 
+    return
+  }
 
   ;(async () => {
     try {

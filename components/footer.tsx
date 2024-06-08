@@ -12,7 +12,7 @@ export function FooterText({ className, ...props }: React.ComponentProps<'p'>) {
       )}
       {...props}
     >
-      Storybot built as party of 
+      Storybots built as part of 
       <ExternalLink href="https://www.buildclub.ai/">
         Build Club Hackathon{' '}
       </ExternalLink>
