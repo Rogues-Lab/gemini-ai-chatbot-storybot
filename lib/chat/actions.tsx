@@ -35,6 +35,9 @@ import { Destinations } from '@/components/flights/destinations'
 import { Video } from '@/components/media/video'
 import { rateLimit } from './ratelimit'
 
+import Replicate from "replicate";
+const replicate = new Replicate();
+
 const genAI = new GoogleGenerativeAI(
   process.env.GOOGLE_GENERATIVE_AI_API_KEY || ''
 )
@@ -129,23 +132,44 @@ async function describeImage(imageBase64: string) {
   }
 }
 
-const handleCommand = async (command: string) => {
+const handleCommand = async (command: string, uiStream, textStream, messageStream, spinnerStream) => {
   if (command === '/help') {
     //todo
     console.log('help command');
-  }
-  
-  if (command === '/generate'){
+    messageStream.update(<BotMessage content={'help command response'} />);
+
+  } else if (command === '/generate'){
     //TODO take the story board and generate a comic book
     //call out
     console.log('generate command');
+
+    console.log("Running the model...");
+      const output = await replicate.run(
+        "stability-ai/sdxl:39ed52f2a78e934b3ba6e2a89f5b1c712de7dfea535525255b1aa35c5565e08b",
+        {
+          input: {
+            prompt: "An astronaut riding a rainbow unicorn, cinematic, dramatic",
+          }
+        }
+      );
+      console.log(output);
+
+      uiStream.update(
+        <BotCard>
+          <img src={output} width={200} height={200}/>
+        </BotCard>
+      )
+
+    
+  } else {
+
   }
 }
 
 async function submitUserMessage(content: string) {
   'use server'
 
-  if (content.startsWith('/')) {
+ 
 
 
   await rateLimit()
@@ -175,8 +199,23 @@ async function submitUserMessage(content: string) {
   const messageStream = createStreamableUI(null)
   const uiStream = createStreamableUI()
 
-  await handleCommand(content); 
-    return
+  // PROCESS COMMANDS
+  if (content.startsWith('/')) {
+    await handleCommand(content, uiStream, textStream, messageStream, spinnerStream); 
+
+    uiStream.done()
+    textStream.done()
+    messageStream.done()
+
+    let textContent = ''
+    spinnerStream.done(null)
+  
+    return {
+      id: nanoid(),
+      attachments: uiStream.value,
+      spinner: spinnerStream.value,
+      display: messageStream.value
+    }
   }
 
   ;(async () => {
