@@ -40,12 +40,12 @@ export function ChatPanel({
     {
       heading: 'No one likes the dentist',
       subheading: 'Overcoming fear of the dentist',
-      message: `Create a short story board for a comic book with panel and text, where the kid is a super hero overcoming fear of the dentist.`
+      message: `Lets start where a kid is a super hero overcoming fear of the dentist.`
     },
     {
       heading: 'Even Superman has a bad day',
       subheading: 'Overcoming a negative thoughts',
-      message: 'Create a short story board for a comic book with panel and text, where the kid is a super hero overcoming a bad day and negative thoughts.'
+      message: 'Lets with a kid is a overcoming a bad day and negative thoughts with playing with pet.'
     }
   ]
 
