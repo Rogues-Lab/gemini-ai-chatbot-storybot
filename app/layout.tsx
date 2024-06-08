@@ -9,20 +9,19 @@ import { Header } from '@/components/header'
 import { Toaster } from '@/components/ui/sonner'
 import { KasadaClient } from '@/lib/kasada/kasada-client'
 
-export const metadata = {
-  metadataBase: new URL(process.env.VERCEL_PROJECT_PRODUCTION_URL!),
-  title: {
-    default: 'Next.js Gemini Chatbot',
-    template: `%s - Next.js Gemini Chatbot`
-  },
-  description:
-    'Build your own generative UI chatbot using the Vercel AI SDK and Google Gemini',
-  icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon-16x16.png',
-    apple: '/apple-touch-icon.png'
-  }
-}
+// export const metadata = {
+//   title: {
+//     default: 'Next.js Gemini Chatbot',
+//     template: `%s - Next.js Gemini Chatbot`
+//   },
+//   description:
+//     'Build your own generative UI chatbot using the Vercel AI SDK and Google Gemini',
+//   icons: {
+//     icon: '/favicon.ico',
+//     shortcut: '/favicon-16x16.png',
+//     apple: '/apple-touch-icon.png'
+//   }
+// }
 
 export const viewport = {
   themeColor: [
@@ -45,7 +44,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           GeistMono.variable
         )}
       >
-        <KasadaClient />
+        {/* <KasadaClient /> */}
         <Toaster position="top-center" />
         <Providers
           attribute="class"
