@@ -347,7 +347,7 @@ async function submitUserMessage(content: string) {
         2. Get location of the story.
         3. Get the plot of the story.
         4. Create a story based on the plot at the location with the characters supplied.
-        5. Create the story as a storyboard, with panels (including image generation prompt and text for each panel)
+        5. Create the story as a storyboard with 8 panels, with panels (including image generation prompt and text for each panel)
         6. Show story board.
       `,
         messages: [...history]
