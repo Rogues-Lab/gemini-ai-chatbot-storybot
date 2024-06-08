@@ -8,6 +8,17 @@ export function EmptyScreen() {
           Storybots - custom story creator
         </h1>
         <p className="leading-normal text-zinc-900">
+          To use this bot the best what it to supply three part to the story:
+          <ul>
+            <li>1, characters</li>
+            <li>2, location</li>
+            <li>3, plot of the story</li>
+          </ul>
+        </p>
+       <p className="leading-normal text-zinc-900">
+          E.g. Lets do a story with a girl and her dog, named Abigail and Spot. They get lost in the forest and it is getting dark but they found there way home after a scare with evening coming in
+       </p>
+        <p className="leading-normal text-zinc-900 pt-8">
           This is an Story generation chatbot app template built as part of {' '}
           <ExternalLink href="https://www.buildclub.ai/">
           Build Club
