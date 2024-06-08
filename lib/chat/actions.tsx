@@ -145,7 +145,7 @@ const handleCommand = async (command: string, uiStream, textStream, messageStrea
     //call out
     console.log('generate command');
 
-    messageStream.update(<BotMessage content={`Running the comic model... (can take around 1 min)`} />);
+    // messageStream.update(<BotMessage content={`Running the comic model... (can take around 1 min)`} />);
     console.log("Running the model...");
       // const output = await replicate.run(
       //   "stability-ai/sdxl:39ed52f2a78e934b3ba6e2a89f5b1c712de7dfea535525255b1aa35c5565e08b",
@@ -172,9 +172,14 @@ const handleCommand = async (command: string, uiStream, textStream, messageStrea
             guidance_scale: 5,
             output_quality: 80,
             negative_prompt: "bad anatomy, bad hands, missing fingers, extra fingers, three hands, three legs, bad arms, missing legs, missing arms, poorly drawn face, bad face, fused face, cloned face, three crus, fused feet, fused thigh, extra crus, ugly fingers, horn, cartoon, cg, 3d, unreal, animate, amputation, disconnected limbs",
-            comic_description: "at home, read new paper #at home, The newspaper says there is a treasure house in the forest.\non the road, near the forest\n[NC] The car on the road, near the forest #He drives to the forest in search of treasure.\n[NC]A tiger appeared in the forest, at night \nvery frightened, open mouth, in the forest, at night\nrunning very fast, in the forest, at night\n[NC] A house in the forest, at night #Suddenly, he discovers the treasure house!\nin the house filled with  treasure, laughing, at night #He is overjoyed inside the house.",
+            comic_description: `girl in dentist's waiting room #Abigail arrived at the dentist's office
+            girl sitting in dentist's chair #She sat in the dentist's chair
+            girl scared of dental pick #She saw a scary sharp instrument!
+            girl looking brave #But she was brave, because she knew it wouldn't hurt
+            girl's teeth being cleaned with pick #The dentist cleaned her teeth
+            dentist offering candy to girl #The dentist gave her a candy for being so brave`,
             style_strength_ratio: 20,
-            character_description: "a man, wearing black suit"
+            character_description: "a blonde girl img, wearing a plain white shirt"
           }
         }
       );
