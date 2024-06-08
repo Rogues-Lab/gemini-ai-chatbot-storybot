@@ -19,7 +19,7 @@ export function EmptyScreen() {
           E.g. Lets do a story with a girl and her dog, named Abigail and Spot. They get lost in the forest and it is getting dark but they found there way home after a scare with evening coming in
        </p>
         <p className="leading-normal text-zinc-900 pt-8">
-          This is an Story generation chatbot app template built as part of {' '}
+          This is an Story generation chatbot app built as part of {' '}
           <ExternalLink href="https://www.buildclub.ai/">
           Build Club
         </ExternalLink>
