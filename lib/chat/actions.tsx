@@ -357,7 +357,7 @@ async function submitUserMessage(content: string) {
         4. Create a story based on the plot at the location with the characters supplied.
         5. Create the story as a storyboard with 8 panels, with panels (including image generation prompt and text for each panel)
         6. Show story board.
-        7. Complete the comic generation prompt with the story board with 8 panels from above. For each panel is divided by a new line include the image prompt then # and then the text  with /n for new line in a single string
+        7. Complete the comic generation prompt with the story board with 8 panels from above. For each panel is divided by a new line include the image prompt then # and then the text for new line in a single string
         8. Create a character description for the main character in the story.
         9. Show the comic generation prompt 
         10. Call showComic tool with the comic generation prompt.
