@@ -141,21 +141,26 @@ const handleCommand = async (command: string, uiStream, textStream, messageStrea
     console.log('help command');
     messageStream.update(<BotMessage content={'help command response'} />);
 
-  } else if (command === '/generate'){
-    //TODO take the story board and generate a comic book
-    //call out
-    console.log('generate command');
+  } else  if (command.startsWith('/generate')) {
+    let args = command.substring('/generate'.length).trim();
 
-    // messageStream.update(<BotMessage content={`Running the comic model... (can take around 1 min)`} />);
+    // if (args.length < 1) {
+    //   messageStream.update(<BotMessage content={'please provide a comic generation prompt'} />);
+    //   return;
+    // }
+    const testGenerationPrompt = `girl in dentist's waiting room #Abigail arrived at the dentist's office
+            girl is very nervous #She was very nervous
+            girl sitting in dentist's chair #She sat in the dentist's chair
+            girl scared of dental pick #She saw a scary sharp instrument!
+            girl looking brave #But she was brave, because she knew it wouldn't hurt
+            girl's teeth being cleaned with pick #The dentist cleaned her teeth
+            dentist offering candy to girl #The dentist gave her a candy for being so brave
+            girl was wondering why she was scared at all`;
+  
+    const comicGenerationPrompt = args || testGenerationPrompt;
+
+
     console.log("Running the model...");
-      // const output = await replicate.run(
-      //   "stability-ai/sdxl:39ed52f2a78e934b3ba6e2a89f5b1c712de7dfea535525255b1aa35c5565e08b",
-      //   {
-      //     input: {
-      //       prompt: "An astronaut riding a rainbow unicorn, cinematic, dramatic",
-      //     }
-      //   }
-      // );
       const output = await replicate.run(
         "hvision-nku/storydiffusion:39c85f153f00e4e9328cb3035b94559a8ec66170eb4c0618c07b16528bf20ac2",
         {
@@ -173,14 +178,7 @@ const handleCommand = async (command: string, uiStream, textStream, messageStrea
             guidance_scale: 5,
             output_quality: 80,
             negative_prompt: "bad anatomy, bad hands, missing fingers, extra fingers, three hands, three legs, bad arms, missing legs, missing arms, poorly drawn face, bad face, fused face, cloned face, three crus, fused feet, fused thigh, extra crus, ugly fingers, horn, cartoon, cg, 3d, unreal, animate, amputation, disconnected limbs",
-            comic_description: `girl in dentist's waiting room #Abigail arrived at the dentist's office
-            girl is very nervous #She was very nervous
-            girl sitting in dentist's chair #She sat in the dentist's chair
-            girl scared of dental pick #She saw a scary sharp instrument!
-            girl looking brave #But she was brave, because she knew it wouldn't hurt
-            girl's teeth being cleaned with pick #The dentist cleaned her teeth
-            dentist offering candy to girl #The dentist gave her a candy for being so brave
-            girl was wondering why she was scared at all`,
+            comic_description: comicGenerationPrompt,
             style_strength_ratio: 20,
             character_description: "a blonde girl img, wearing a plain white shirt"
           }
