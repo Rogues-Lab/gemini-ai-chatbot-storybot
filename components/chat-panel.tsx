@@ -38,14 +38,14 @@ export function ChatPanel({
 
   const exampleMessages = [
     {
-      heading: 'List flights flying from',
-      subheading: 'San Francisco to Rome today',
-      message: `List flights flying from San Francisco to Rome today`
+      heading: 'No one likes the dentist',
+      subheading: 'Overcoming fear of the dentist',
+      message: `Create a short story board for a comic book with panel and text, where the kid is a super hero overcoming fear of the dentist.`
     },
     {
-      heading: 'What is the status',
-      subheading: 'of flight BA142?',
-      message: 'What is the status of flight BA142?'
+      heading: 'Even Superman has a bad day',
+      subheading: 'Overcoming a negative thoughts',
+      message: 'Create a short story board for a comic book with panel and text, where the kid is a super hero overcoming a bad day and negative thoughts.'
     }
   ]
 

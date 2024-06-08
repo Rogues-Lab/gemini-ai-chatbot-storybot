@@ -12,7 +12,11 @@ export function FooterText({ className, ...props }: React.ComponentProps<'p'>) {
       )}
       {...props}
     >
-      Open source AI chatbot built with{' '}
+      Storybot built as party of 
+      <ExternalLink href="https://www.buildclub.ai/">
+        Build Club
+      </ExternalLink>
+       with{' '}
       <ExternalLink href="https://cloud.google.com/vertex-ai">
         Google Gemini
       </ExternalLink>
