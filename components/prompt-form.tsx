@@ -121,7 +121,8 @@ export function PromptForm({
       <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-zinc-100 px-12 sm:rounded-full sm:px-12">
         {/* <Tooltip>
           <TooltipTrigger asChild> */}
-        <Button
+        {/* upload button */}
+        {/* <Button
           variant="outline"
           size="icon"
           className="absolute left-4 top-[14px] size-8 rounded-full bg-background p-0 sm:left-4"
@@ -131,7 +132,7 @@ export function PromptForm({
         >
           <IconPlus />
           <span className="sr-only">New Chat</span>
-        </Button>
+        </Button> */}
         {/* </TooltipTrigger>
           <TooltipContent>Add Attachments</TooltipContent>
         </Tooltip> */}

@@ -57,7 +57,9 @@ export function Header() {
         </React.Suspense>
       </div>
       <div className="flex items-center justify-end gap-2">
+        <a href='/'>
         <Image className='mr-6 mx-6' src="/images/storybot-logo-word.png" alt="Storybot logo" width={240} height={60} />
+        </a>
         {/* <Button asChild size="sm" variant="ghost">
           <a
             target="_blank"
