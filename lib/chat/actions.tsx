@@ -145,6 +145,7 @@ const handleCommand = async (command: string, uiStream, textStream, messageStrea
     //call out
     console.log('generate command');
 
+    messageStream.update(<BotMessage content={`Running the comic model... (can take around 1 min)`} />);
     console.log("Running the model...");
       // const output = await replicate.run(
       //   "stability-ai/sdxl:39ed52f2a78e934b3ba6e2a89f5b1c712de7dfea535525255b1aa35c5565e08b",
@@ -167,7 +168,7 @@ const handleCommand = async (command: string, uiStream, textStream, messageStrea
             image_height: 768,
             sa32_setting: 0.5,
             sa64_setting: 0.5,
-            output_format: "webp",
+            output_format: "jpg",
             guidance_scale: 5,
             output_quality: 80,
             negative_prompt: "bad anatomy, bad hands, missing fingers, extra fingers, three hands, three legs, bad arms, missing legs, missing arms, poorly drawn face, bad face, fused face, cloned face, three crus, fused feet, fused thigh, extra crus, ugly fingers, horn, cartoon, cg, 3d, unreal, animate, amputation, disconnected limbs",
@@ -188,7 +189,7 @@ const handleCommand = async (command: string, uiStream, textStream, messageStrea
     
   } else {
     // Unknown command
-    messageStream.update(<BotMessage content={`unknow command ${content}`} />);
+    messageStream.update(<BotMessage content={`unknown command ${command}`} />);
   }
 }
 
