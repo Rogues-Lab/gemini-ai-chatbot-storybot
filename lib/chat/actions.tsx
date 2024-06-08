@@ -173,11 +173,13 @@ const handleCommand = async (command: string, uiStream, textStream, messageStrea
             output_quality: 80,
             negative_prompt: "bad anatomy, bad hands, missing fingers, extra fingers, three hands, three legs, bad arms, missing legs, missing arms, poorly drawn face, bad face, fused face, cloned face, three crus, fused feet, fused thigh, extra crus, ugly fingers, horn, cartoon, cg, 3d, unreal, animate, amputation, disconnected limbs",
             comic_description: `girl in dentist's waiting room #Abigail arrived at the dentist's office
+            girl is very nervous #She was very nervous
             girl sitting in dentist's chair #She sat in the dentist's chair
             girl scared of dental pick #She saw a scary sharp instrument!
             girl looking brave #But she was brave, because she knew it wouldn't hurt
             girl's teeth being cleaned with pick #The dentist cleaned her teeth
-            dentist offering candy to girl #The dentist gave her a candy for being so brave`,
+            dentist offering candy to girl #The dentist gave her a candy for being so brave
+            girl was wondering why she was scared at all`,
             style_strength_ratio: 20,
             character_description: "a blonde girl img, wearing a plain white shirt"
           }
