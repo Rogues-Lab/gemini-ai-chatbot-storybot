@@ -39,8 +39,6 @@ async function handler(request: Request) {
       statusText: r.statusText,
       headers: responseHeaders
     })
-
-  request
 }
 
 export const GET = handler
