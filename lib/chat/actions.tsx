@@ -36,7 +36,9 @@ import { Video } from '@/components/media/video'
 import { rateLimit } from './ratelimit'
 
 import Replicate from "replicate";
-const replicate = new Replicate();
+const replicate = new Replicate(
+  {auth: process.env.REPLICATE_API_KEY}
+);
 
 const genAI = new GoogleGenerativeAI(
   process.env.GOOGLE_GENERATIVE_AI_API_KEY || ''
@@ -144,11 +146,34 @@ const handleCommand = async (command: string, uiStream, textStream, messageStrea
     console.log('generate command');
 
     console.log("Running the model...");
+      // const output = await replicate.run(
+      //   "stability-ai/sdxl:39ed52f2a78e934b3ba6e2a89f5b1c712de7dfea535525255b1aa35c5565e08b",
+      //   {
+      //     input: {
+      //       prompt: "An astronaut riding a rainbow unicorn, cinematic, dramatic",
+      //     }
+      //   }
+      // );
       const output = await replicate.run(
-        "stability-ai/sdxl:39ed52f2a78e934b3ba6e2a89f5b1c712de7dfea535525255b1aa35c5565e08b",
+        "hvision-nku/storydiffusion:39c85f153f00e4e9328cb3035b94559a8ec66170eb4c0618c07b16528bf20ac2",
         {
           input: {
-            prompt: "An astronaut riding a rainbow unicorn, cinematic, dramatic",
+            num_ids: 3,
+            sd_model: "Unstable",
+            num_steps: 25,
+            style_name: "Japanese Anime",
+            comic_style: "Classic Comic Style",
+            image_width: 768,
+            image_height: 768,
+            sa32_setting: 0.5,
+            sa64_setting: 0.5,
+            output_format: "webp",
+            guidance_scale: 5,
+            output_quality: 80,
+            negative_prompt: "bad anatomy, bad hands, missing fingers, extra fingers, three hands, three legs, bad arms, missing legs, missing arms, poorly drawn face, bad face, fused face, cloned face, three crus, fused feet, fused thigh, extra crus, ugly fingers, horn, cartoon, cg, 3d, unreal, animate, amputation, disconnected limbs",
+            comic_description: "at home, read new paper #at home, The newspaper says there is a treasure house in the forest.\non the road, near the forest\n[NC] The car on the road, near the forest #He drives to the forest in search of treasure.\n[NC]A tiger appeared in the forest, at night \nvery frightened, open mouth, in the forest, at night\nrunning very fast, in the forest, at night\n[NC] A house in the forest, at night #Suddenly, he discovers the treasure house!\nin the house filled with  treasure, laughing, at night #He is overjoyed inside the house.",
+            style_strength_ratio: 20,
+            character_description: "a man, wearing black suit"
           }
         }
       );
@@ -156,13 +181,14 @@ const handleCommand = async (command: string, uiStream, textStream, messageStrea
 
       uiStream.update(
         <BotCard>
-          <img src={output} width={200} height={200}/>
+          <img src={output.comic} width={500} height={500}/>
         </BotCard>
       )
 
     
   } else {
-
+    // Unknown command
+    messageStream.update(<BotMessage content={`unknow command ${content}`} />);
   }
 }
 

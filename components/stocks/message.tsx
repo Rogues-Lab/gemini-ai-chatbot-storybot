@@ -103,7 +103,7 @@ export function BotCard({
           !showAvatar && 'invisible'
         )}
       >
-        <img className="size-6" src="/images/gemini.png" alt="gemini logo" />
+        <img className="size-6" src="/images/storybot-logo.png" alt="storybot logo" />
       </div>
       <div className="ml-4 flex-1 pl-2">{children}</div>
     </div>

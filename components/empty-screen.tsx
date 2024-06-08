@@ -33,6 +33,13 @@ export function EmptyScreen() {
           always aware of your stateful interactions as they happen in the
           browser.
         </p>
+        <p className="leading-normal text-zinc-900">
+          It uses a custom stable diffusion model (story diffusion) to create comic, inference on replicate
+          <ExternalLink href="https://replicate.com">
+            Replicate
+          </ExternalLink>{' '}
+          The logo was mid journey.
+        </p>
       </div>
     </div>
   )
