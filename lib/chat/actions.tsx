@@ -33,7 +33,7 @@ import { z } from 'zod'
 import { ListHotels } from '@/components/hotels/list-hotels'
 import { Destinations } from '@/components/flights/destinations'
 import { Video } from '@/components/media/video'
-import { Audio } from '@/components/media/audio'
+import { Comic } from '@/components/media/comic'
 import { rateLimit } from './ratelimit'
 
 import Replicate from "replicate";
@@ -362,7 +362,7 @@ async function submitUserMessage(content: string) {
         7. Complete the comic generation prompt with the story board with 8 panels from above. For each panel is divided by a new line include the image prompt then # and then the text  with /n for new line in a single string
         8. Create a character description for the main character in the story.
         9. Show the comic generation prompt 
-        10. show your working out
+        10. Call showComic tool with the comic generation prompt.
       `,
         messages: [...history]
       })
@@ -575,7 +575,7 @@ async function submitUserMessage(content: string) {
                   display: {
                     name: 'showComic',
                     props: {
-                      comicGenerationPrompt: args
+                      args: args
                     }
                   }
                 }
@@ -584,7 +584,7 @@ async function submitUserMessage(content: string) {
 
             uiStream.update(
               <BotCard>
-                <Audio comicGenerationPrompt={args} />
+                <Comic args={args} />
               </BotCard>
             )
           }
@@ -787,32 +787,8 @@ export const getUIStateFromAIState = (aiState: Chat) => {
         message.role === 'assistant' ? (
           message.display?.name === 'showComic' ? (
             <BotCard>
-              <Audio summary={message.display.props.summary} />
+              <Comic comicGenerationPrompt={message.display.props.summary} />
               ${message.display.props}
-            </BotCard>
-          ) : message.display?.name === 'showSeatPicker' ? (
-            <BotCard>
-              <SelectSeats summary={message.display.props.summary} />
-            </BotCard>
-          ) : message.display?.name === 'showSeatPicker' ? (
-            <BotCard>
-              <SelectSeats summary={message.display.props.summary} />
-            </BotCard>
-          ) : message.display?.name === 'showHotels' ? (
-            <BotCard>
-              <ListHotels />
-            </BotCard>
-          ) : message.content === 'The purchase has completed successfully.' ? (
-            <BotCard>
-              <PurchaseTickets status="expired" />
-            </BotCard>
-          ) : message.display?.name === 'showBoardingPass' ? (
-            <BotCard>
-              <BoardingPass summary={message.display.props.summary} />
-            </BotCard>
-          ) : message.display?.name === 'listDestinations' ? (
-            <BotCard>
-              <Destinations destinations={message.display.props.destinations} />
             </BotCard>
           ) : (
             <BotMessage content={message.content} />

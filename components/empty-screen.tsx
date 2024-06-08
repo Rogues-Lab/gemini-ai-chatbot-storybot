@@ -7,14 +7,14 @@ export function EmptyScreen() {
         <h1 className="text-2xl sm:text-3xl tracking-tight font-semibold max-w-fit inline-block">
           Storybots - custom story creator
         </h1>
-        <p className="leading-normal text-zinc-900">
+        <div className="leading-normal text-zinc-900">
           To use this bot the best what it to supply three part to the story:
           <ul>
             <li>1, characters</li>
             <li>2, location</li>
             <li>3, plot of the story</li>
           </ul>
-        </p>
+        </div>
        <p className="leading-normal text-zinc-900">
           E.g. Lets do a story with a girl and her dog, named Abigail and Spot. They get lost in the forest and it is getting dark but they found there way home after a scare with evening coming in
        </p>
