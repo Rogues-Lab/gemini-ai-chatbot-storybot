@@ -14,7 +14,7 @@ export function FooterText({ className, ...props }: React.ComponentProps<'p'>) {
     >
       Storybot built as party of 
       <ExternalLink href="https://www.buildclub.ai/">
-        Build Club
+        Build Club Hackathon{' '}
       </ExternalLink>
        with{' '}
       <ExternalLink href="https://cloud.google.com/vertex-ai">
