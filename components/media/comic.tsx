@@ -56,7 +56,7 @@ export const Comic = ({characterDescription, comicGenerationPrompt }: {character
 
             </div>
             <div className="flex flex-col items-center">
-              <div className="text-black text-sm">characterDescription... ${JSON.stringify(characterDescription)}</div>
+              <div className="text-black text-sm">characterDescription... {characterDescription}</div>
               <div className="text-black text-sm">comicGenerationPrompt... {comicGenerationPrompt}</div>
               <div className="text-black text-sm">comic... {comic}</div>
               <div className="text-black text-sm">isLoading... {loading == true ? 'true' : 'false'}</div>
