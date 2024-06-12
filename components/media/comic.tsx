@@ -78,7 +78,7 @@ export const Comic = ({
     })
     const data = await response.json()
     console.log('poll data', data);
-    if (data?.prediction?.status === 'done') {
+    if (data?.prediction?.status === "succeeded") {
      await setReplicateJob(null)
     }
     await setPrediction(data.prediction)
