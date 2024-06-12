@@ -35,11 +35,8 @@ import { Destinations } from '@/components/flights/destinations'
 import { Video } from '@/components/media/video'
 import { Comic } from '@/components/media/comic'
 import { rateLimit } from './ratelimit'
+import { getAsyncComic, getPrediction } from '@/app/api/prediction/infer/replicate';
 
-import Replicate from "replicate";
-const replicate = new Replicate(
-  {auth: process.env.REPLICATE_API_KEY}
-);
 
 const genAI = new GoogleGenerativeAI(
   process.env.GOOGLE_GENERATIVE_AI_API_KEY || ''
@@ -139,15 +136,11 @@ const handleCommand = async (command: string, uiStream, textStream, messageStrea
   if (command === '/help') {
     //todo
     console.log('help command');
-    messageStream.update(<BotMessage content={'help command response'} />);
+    messageStream.update(<BotMessage content={'commands: [ /help, /generate "comic prompt", /prediction "prediction id" ]'} /> );
 
   } else  if (command.startsWith('/generate')) {
     let args = command.substring('/generate'.length).trim();
 
-    // if (args.length < 1) {
-    //   messageStream.update(<BotMessage content={'please provide a comic generation prompt'} />);
-    //   return;
-    // }
     const testGenerationPrompt = `girl in dentist's waiting room #Abigail arrived at the dentist's office
             girl is very nervous #She was very nervous
             girl sitting in dentist's chair #She sat in the dentist's chair
@@ -156,41 +149,66 @@ const handleCommand = async (command: string, uiStream, textStream, messageStrea
             girl's teeth being cleaned with pick #The dentist cleaned her teeth
             dentist offering candy to girl #The dentist gave her a candy for being so brave
             girl was wondering why she was scared at all`;
-  
     const comicGenerationPrompt = args || testGenerationPrompt;
+    const characterDescription = "a blonde"
+    const output = await getAsyncComic(comicGenerationPrompt, characterDescription);
+      // const output = await replicate.run(
+      //   "hvision-nku/storydiffusion:39c85f153f00e4e9328cb3035b94559a8ec66170eb4c0618c07b16528bf20ac2",
+      //   {
+      //     input: {
+      //       num_ids: 3,
+      //       sd_model: "Unstable",
+      //       num_steps: 25,
+      //       style_name: "Japanese Anime",
+      //       comic_style: "Classic Comic Style",
+      //       image_width: 768,
+      //       image_height: 768,
+      //       sa32_setting: 0.5,
+      //       sa64_setting: 0.5,
+      //       output_format: "jpg",
+      //       guidance_scale: 5,
+      //       output_quality: 80,
+      //       negative_prompt: "bad anatomy, bad hands, missing fingers, extra fingers, three hands, three legs, bad arms, missing legs, missing arms, poorly drawn face, bad face, fused face, cloned face, three crus, fused feet, fused thigh, extra crus, ugly fingers, horn, cartoon, cg, 3d, unreal, animate, amputation, disconnected limbs",
+      //       comic_description: comicGenerationPrompt,
+      //       style_strength_ratio: 20,
+      //       character_description: "a blonde girl img, wearing a plain white shirt"
+      //     }
+      //   }
+      // );
 
-
-    console.log("Running the model...");
-      const output = await replicate.run(
-        "hvision-nku/storydiffusion:39c85f153f00e4e9328cb3035b94559a8ec66170eb4c0618c07b16528bf20ac2",
-        {
-          input: {
-            num_ids: 3,
-            sd_model: "Unstable",
-            num_steps: 25,
-            style_name: "Japanese Anime",
-            comic_style: "Classic Comic Style",
-            image_width: 768,
-            image_height: 768,
-            sa32_setting: 0.5,
-            sa64_setting: 0.5,
-            output_format: "jpg",
-            guidance_scale: 5,
-            output_quality: 80,
-            negative_prompt: "bad anatomy, bad hands, missing fingers, extra fingers, three hands, three legs, bad arms, missing legs, missing arms, poorly drawn face, bad face, fused face, cloned face, three crus, fused feet, fused thigh, extra crus, ugly fingers, horn, cartoon, cg, 3d, unreal, animate, amputation, disconnected limbs",
-            comic_description: comicGenerationPrompt,
-            style_strength_ratio: 20,
-            character_description: "a blonde girl img, wearing a plain white shirt"
-          }
-        }
-      );
-      console.log(output);
 
       uiStream.update(
         <BotCard>
-          <img src={output.comic} width={500} height={500}/>
+          <div>Processing Prediction: {output?.id} (result = /prediction {output?.id})</div>
         </BotCard>
       )
+
+    
+  }else  if (command.startsWith('/prediction')) {
+    let args = command.substring('/prediction'.length).trim();
+
+
+    const predictionId = args || '';
+    const output = await getPrediction(predictionId);
+      
+      console.log("output", output);
+
+      if((output?.output === null || output?.output === undefined) ){
+        uiStream.update(
+          <BotCard>
+            <div>Processing Prediction: {output?.id},</div>
+            <div>status: {output?.status},</div>
+            <div>started_at: {output?.started_at}</div>
+            {output?.error && <div>error: {output?.error}</div>}
+          </BotCard>
+        )
+      } else {
+        uiStream.update(
+          <BotCard>
+            <img src={output?.output?.comic} width={500} height={500}/> 
+          </BotCard>
+        )
+      }
 
     
   } else {
@@ -201,9 +219,6 @@ const handleCommand = async (command: string, uiStream, textStream, messageStrea
 
 async function submitUserMessage(content: string) {
   'use server'
-
- 
-
 
   await rateLimit()
 
@@ -239,8 +254,6 @@ async function submitUserMessage(content: string) {
     uiStream.done()
     textStream.done()
     messageStream.done()
-
-    let textContent = ''
     spinnerStream.done(null)
   
     return {
@@ -260,9 +273,10 @@ async function submitUserMessage(content: string) {
             description: 'show a comic book based on the Comic Generation Prompt.',
             parameters: z.object({
               comicGenerationPrompt: z.string(),
+              characterDescription: z.string().describe('Character description for the main character in the story') 
             }),
-            execute: async ({ comicGenerationPrompt }) => {
-              console.log("showComic ",comicGenerationPrompt);
+            execute: async ({ characterDescription, comicGenerationPrompt,  }) => {
+              console.log("showComic ",characterDescription, comicGenerationPrompt);
             }
           },
 
@@ -573,7 +587,8 @@ async function submitUserMessage(content: string) {
                   display: {
                     name: 'showComic',
                     props: {
-                      args: args
+                      comicGenerationPrompt: args.comicGenerationPrompt,
+                      characterDescription: args.characterDescription
                     }
                   }
                 }
@@ -582,7 +597,7 @@ async function submitUserMessage(content: string) {
 
             uiStream.update(
               <BotCard>
-                <Comic args={args} />
+                <Comic comicGenerationPrompt={comicGenerationPrompt} characterDescription={characterDescription}/>
               </BotCard>
             )
           }
@@ -785,8 +800,7 @@ export const getUIStateFromAIState = (aiState: Chat) => {
         message.role === 'assistant' ? (
           message.display?.name === 'showComic' ? (
             <BotCard>
-              <Comic comicGenerationPrompt={message.display.props.summary} />
-              ${message.display.props}
+              <Comic args={message.display.props}/>
             </BotCard>
           ) : (
             <BotMessage content={message.content} />

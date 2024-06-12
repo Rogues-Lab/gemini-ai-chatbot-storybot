@@ -631,11 +631,12 @@ export const CardIcon = () => {
   )
 }
 
-export const SpinnerIcon = () => {
+
+export const SpinnerIcon = ({ color = "currentColor" }) => {
   return (
     <svg
       fill="none"
-      stroke="currentColor"
+      stroke={color}
       strokeWidth="1.5"
       viewBox="0 0 24 24"
       strokeLinecap="round"

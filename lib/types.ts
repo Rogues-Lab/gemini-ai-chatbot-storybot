@@ -35,3 +35,12 @@ export interface User extends Record<string, any> {
   password: string
   salt: string
 }
+
+export interface Job extends Record<string, any> {
+  reference: string
+  prompt: string
+  promptArgs: any
+  result: any
+  creation: string
+  status: string
+}
