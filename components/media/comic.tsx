@@ -18,7 +18,7 @@ export const Comic = ({characterDescription, comicGenerationPrompt }: {character
         const predictionJob = await getAsyncComic(comicGenerationPrompt, characterDescription);
         setReplicateJob(predictionJob);
         console.log('replicateJob', predictionJob);
-        await pollPrediction(predictionJob?.id);
+        pollPrediction(predictionJob?.id);
       } catch (error) {
         console.error('Error generating comic', error);
       }
