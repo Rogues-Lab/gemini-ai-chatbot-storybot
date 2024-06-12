@@ -273,11 +273,11 @@ async function submitUserMessage(content: string) {
             description: 'show a comic book based on the Comic Generation Prompt.',
             parameters: z.object({
               comicGenerationPrompt: z.string(),
-              characterDescription: z.string().describe('Character description for the main character in the story') 
+              characterDescription: z.string()
             }),
-            execute: async ({ characterDescription, comicGenerationPrompt,  }) => {
-              console.log("showComic ",characterDescription, comicGenerationPrompt);
-            }
+            // execute: async ({ characterDescription, comicGenerationPrompt,  }) => {
+            //   console.log("showComic tool actions - ",characterDescription, comicGenerationPrompt);
+            // }
           },
 
           // showFlights: {
@@ -374,7 +374,7 @@ async function submitUserMessage(content: string) {
         7. Complete the comic generation prompt with the story board with 8 panels from above. For each panel is divided by a new line include the image prompt then # and then the text for new line in a single string
         8. Create a character description for the main character in the story.
         9. Show the comic generation prompt 
-        10. Call showComic tool with the comic generation prompt.
+        10. Call showComic tool with the comic generation prompt and character description
       `,
         messages: [...history]
       })
@@ -803,7 +803,7 @@ export const getUIStateFromAIState = (aiState: Chat) => {
         message.role === 'assistant' ? (
           message.display?.name === 'showComic' ? (
             <BotCard>
-              <Comic args={message.display.props}/>
+              <Comic comicGenerationPrompt={message.display.props.comicGenerationPrompt} characterDescription={message.display.props.characterDescription}/>
             </BotCard>
           ) : (
             <BotMessage content={message.content} />
