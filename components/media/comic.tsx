@@ -78,7 +78,7 @@ export const Comic = ({
     })
     const data = await response.json()
     console.log('poll data', data);
-    if (data?.prediction?.status === "succeeded") {
+    if (data?.prediction?.status === "succeeded" || data?.prediction?.status === "failed") {
      await setReplicateJob(null)
     }
     await setPrediction(data.prediction)
@@ -165,7 +165,7 @@ export const Comic = ({
       )}
 
       {prediction?.error && (
-        <div className="flex flex-row items-center text-red">
+        <div className="flex flex-row items-center text-red-500">
          {prediction?.error}
         </div>
       )}
