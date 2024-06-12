@@ -16,9 +16,9 @@ export const Comic = ({characterDescription, comicGenerationPrompt }: {character
     const generateComic = async () => {
       try {
         const predictionJob = await getAsyncComic(comicGenerationPrompt, characterDescription);
-        setReplicateJob(predictionJob);
+        await setReplicateJob(predictionJob);
         console.log('replicateJob', predictionJob);
-        pollPrediction(predictionJob?.id);
+        await pollPrediction(predictionJob?.id);
       } catch (error) {
         console.error('Error generating comic', error);
       }
@@ -46,7 +46,7 @@ export const Comic = ({characterDescription, comicGenerationPrompt }: {character
   return (
     <div className="flex flex-col gap-2">
          {!comic && 
-          <div className="flex flex-row items-center text-black">
+          <div className="flex flex-col items-center text-black">
             <div className="text-black text-sm">Comic generation is in progress...</div>
               <div
                 className={`flex flex-row  items-center ${loading ? 'opacity-100' : 'opacity-0'}`}
@@ -55,11 +55,12 @@ export const Comic = ({characterDescription, comicGenerationPrompt }: {character
                 
 
             </div>
-            <div className="flex flex-row items-center">
-            <div className="text-black text-sm">characterDescription... ${JSON.stringify(characterDescription)}</div>
-            <div className="text-black text-sm">Comic... {comicGenerationPrompt}</div>
-            <div className="text-black text-sm">isLoading... ${loading}</div>
-            <div className="text-black text-sm">replicateJob... ${replicateJob}</div>
+            <div className="flex flex-col items-center">
+              <div className="text-black text-sm">characterDescription... ${JSON.stringify(characterDescription)}</div>
+              <div className="text-black text-sm">comicGenerationPrompt... {comicGenerationPrompt}</div>
+              <div className="text-black text-sm">comic... {comic}</div>
+              <div className="text-black text-sm">isLoading... {loading == true ? 'true' : 'false'}</div>
+              <div className="text-black text-sm">replicateJob... {replicateJob}</div>
             </div>
           </div>
          }
