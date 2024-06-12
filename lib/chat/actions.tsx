@@ -574,6 +574,9 @@ async function submitUserMessage(content: string) {
           //   )
           // } else 
           if (toolName === 'showComic') {
+            const { characterDescription,  comicGenerationPrompt} = args
+            console.log("showComic action",characterDescription, comicGenerationPrompt);
+
             aiState.done({
               ...aiState.get(),
               interactions: [],
@@ -587,8 +590,8 @@ async function submitUserMessage(content: string) {
                   display: {
                     name: 'showComic',
                     props: {
-                      comicGenerationPrompt: args.comicGenerationPrompt,
-                      characterDescription: args.characterDescription
+                      comicGenerationPrompt,
+                      characterDescription
                     }
                   }
                 }
