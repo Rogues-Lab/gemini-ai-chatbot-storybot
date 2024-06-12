@@ -10,7 +10,7 @@ import { Toaster } from '@/components/ui/sonner'
 import { KasadaClient } from '@/lib/kasada/kasada-client'
 
 export const metadata = {
-  metadataBase: new URL(process.env.VERCEL_PROJECT_PRODUCTION_URL!),
+  // metadataBase: new URL(process.env.VERCEL_PROJECT_PRODUCTION_URL!),
   title: {
     default: 'StoryBots.xyz Gemini Chatbot',
     template: `%s - StoryBots.xyz  Gemini Chatbot`
